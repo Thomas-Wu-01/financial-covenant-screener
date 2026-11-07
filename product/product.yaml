@@ -1,0 +1,11 @@
+_ > nanoagent.plugin.v0001.ProductConfig:
+tagline: "Screen fictional companies against exact covenant thresholds"
+summary: "A deterministic multi-company task for leverage and interest coverage, including exact boundary comparisons, missing data, citations, and structured reasons."
+highlights:
+  - "Exact comparisons happen before display rounding"
+  - "Failure and insufficient-data precedence is explicit"
+  - "Every ratio carries available source IDs"
+steps:
+  - "Supply companies, FY2024, and two thresholds"
+  - "The agent reads the synthetic covenant evidence"
+  - "Receive per-company and overall classifications"

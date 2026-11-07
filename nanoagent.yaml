@@ -1,0 +1,28 @@
+_ > nanoagent.plugin.v0001.ManifestConfig:
+id: financial-covenant-screener
+name: Financial Covenant Screener
+version: 0.1.0
+status: ready
+spec: nanoagent.plugin/v0001
+runtime > nanoagent.plugin.v0001.RuntimeConfig:
+  type: mcp_stdio
+  command: [uv, run, --frozen, python, -m, plugin]
+permissions > nanoagent.plugin.v0001.PermissionsConfig:
+  network > nanoagent.plugin.v0001.NetworkConfig:
+    hosts: []
+  filesystem > nanoagent.plugin.v0001.FilesystemConfig:
+    write: []
+tools > dict[contract.Tool, nanoagent.plugin.v0001.ToolConfig]:
+  list_covenant_facts:
+    description: List value-free metadata for fictional covenant facts
+  read_covenant_fact:
+    description: Read one complete fictional covenant fact
+tasks > dict[contract.Task, nanoagent.plugin.v0001.TaskConfig]:
+  screen-covenants:
+    description: Screen companies against leverage and interest coverage thresholds
+    runner: agent
+    tools: [list_covenant_facts, read_covenant_fact]
+    reference: null
+    instructions: |-
+      For each unique requested company, use same-year, same-currency facts. Leverage is debt / EBITDA and passes when its exact value is <= maximum_leverage. Interest coverage is EBIT / interest expense and passes when its exact value is >= minimum_interest_coverage. Compare exact Decimal ratios before rounding displays to two places with ROUND_HALF_UP.
+      Missing values or nonpositive EBITDA/interest make that covenant unevaluable. Return available source IDs in formula order and structured reasons. A company fails if any evaluable covenant fails; otherwise it is insufficient_data if either is unevaluable; otherwise it passes. Overall is fail if any company fails, else insufficient_data if any is insufficient, else pass. Preserve input company order with no duplicates.
